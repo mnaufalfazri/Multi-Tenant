@@ -18,6 +18,7 @@
         autofocus
         class="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-gray-200"
         placeholder="you@example.com"
+        
       >
       @error('email')
         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

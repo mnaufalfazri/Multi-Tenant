@@ -46,17 +46,13 @@ class WebAuthController extends Controller
             'password' => ['required', 'string', 'max:72'],
         ]);
 
-        $remember = $request->boolean('remember');
-
-        if (!Auth::attempt($credentials, $remember)) {
-            return back()
-                ->withErrors(['email' => 'Invalid email or password.'])
-                ->onlyInput('email');
+        if (!Auth::attempt($credentials)) {
+            return back()->withErrors([
+                'email' => 'Please Provide The Correct Email',
+            ])->onlyInput('email');
         }
-
         $request->session()->regenerate();
-
-        return redirect()->route('home')->with('status', 'Logged in!');
+        return redirect()->intended('/');
     }
 
     public function logout(Request $request)
