@@ -17,10 +17,16 @@ class Workspaces extends Model
     protected $fillable = [
         'name',
         'slug',
+        'owner_id'
     ];
 
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function tickets(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\Ticket::class);
     }
 }

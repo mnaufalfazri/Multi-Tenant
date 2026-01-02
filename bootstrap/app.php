@@ -22,6 +22,9 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
+        $middleware->alias([
+            'workspace.member' => \App\Http\Middleware\EnsureWorkspaceMember::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
