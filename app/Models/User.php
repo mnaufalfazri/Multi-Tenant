@@ -12,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable, HasApiTokens, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Notifiable, TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,5 +49,17 @@ class User extends Authenticatable
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];
+    }
+
+    public function workspaces()
+    {
+        return $this->belongsToMany(\App\Models\Workspaces::class, 'workspace_members', 'user_id', 'workspace_id')
+            ->withPivot(['role', 'joined_at'])
+            ->withTimestamps();
+    }
+
+    public function workspaceMemberships()
+    {
+        return $this->hasMany(\App\Models\WorkspaceMember::class, 'user_id');
     }
 }
